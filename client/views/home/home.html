@@ -1,0 +1,62 @@
+<template name="Home">
+  	<div class="uk-margin-top uk-width-large-4-5 uk-width-medium-2-3 uk-width-small-1-1 uk-container-center">
+  		<div class="uk-width-large-1-2 uk-width-medium-2-3 uk-width-small-1-1 uk-container-center">
+  			{{> userSummary}}
+  		</div>
+  		<div class="uk-grid uk-tight-panels">
+			<div class="uk-width-large-1-2 uk-width-small-1-1 uk-overflow-vertical">
+				{{> liveHunts}}
+			</div>
+			<div class="uk-width-large-1-2 uk-width-small-1-1 uk-overflow-vertical">
+				{{> myHunts}}
+			</div>
+		</div>
+	</div>
+</template>
+
+<template name="userSummary">
+	<div class="uk-grid uk-margin-bottom uk-vertical-align">
+		<div class="uk-width-3-5 uk-vertical-align-header-middle">
+			<h1 class="">
+				Points available: <span class="uk-text-primary">{{points}}</span>
+			</h1>
+		</div>
+		<div class="uk-width-2-5 uk-vertical-align-header-middle">
+			<h3 class="uk-float-right uk-margin-small-bottom">WEEK ENDS:</h3>
+			<h3 class="uk-float-right uk-margin-top-remove uk-text-primary uk-clear-both">{{week_ends}}</h3></div>
+		<div class="uk-clearfix"></div>
+	</div>
+</template>
+
+<template name="liveHunts">
+	<h2 class="uk-heading-large uk-text-center">Available Hunts</h2>
+	<div class="scroll-container uk-tight-panels">
+		{{#each liveHunts}}
+			{{> hunt}}
+		{{/each}}
+	</div>
+</template>
+
+<template name="myHunts">
+	<h2 class="uk-heading-large uk-text-center">My Live Hunts</h2>
+	<div class="scroll-container uk-tight-panels">
+		{{#each myHunts}}
+			{{> hunt}}
+		{{/each}}
+	</div>
+</template>
+
+<template name="hunt">
+	<div class="uk-panel uk-panel-box {{#if affordable}}uk-panel-box-primary{{/if}}{{#if profit}}uk-panel-box-secondary{{/if}} uk-width-1-1">
+		<div class="uk-panel-title">{{name}}</div>
+		{{#if myHunt}}
+			<div class="uk-panel-badge panel-button {{#if positive profit}}uk-profit{{else}}uk-loss{{/if}}">Profit: {{profit}} Points</div>
+		{{else}}
+			<div class="uk-panel-badge panel-button {{#unless affordable}}disabled{{/unless}}" data-action="buy">
+				<span class="{{#if affordable}}uk-text-warning{{/if}}">{{points}}</span> Points
+			</div>
+		{{/if}}
+		<a href="{{redirect_url}}" class="basic-link uk-display-inline uk-float-left uk-margin-small-top">{{tagline}}</a>
+		<p class="uk-display-inline uk-float-right uk-margin-small-top">Owned by <span class="uk-text-warning">{{buyers}}</span> hunters</p>
+	</div>
+</template>

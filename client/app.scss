@@ -1,0 +1,276 @@
+/*****************************************************************************/
+/* Global CSS Styles */
+/*****************************************************************************/
+@import "./third-party/uikit/scss/uikit-mixins";
+@import "./third-party/uikit/scss/uikit-variables";
+
+$color-1: #da552f;
+$color-2: #feb331;
+$color-3: #662343;
+$light-color: #dcd6a3; 
+$dark-color: #402932;
+
+$primary-background:              $color-1;
+$primary-color:                   $light-color;
+$success-background:              $color-2;
+$success-color:                   $light-color;
+$warning-background:              $dark-color;
+$warning-color:                   $color-2;
+$danger-background:               $color-3;
+$danger-color:                    $light-color;
+$basic-black:					  #444;
+
+$hover-amount:					  20%;
+$disabled-amount:				  70%;
+
+$primary-hover-color:		  	  darken($primary-color, $hover-amount);
+$primary-hover-background:	  	  darken($primary-background, $hover-amount);
+$primary-disabled-color:		  desaturate($primary-color, $disabled-amount);
+$primary-disabled-background:	  desaturate($primary-background, $disabled-amount);
+
+$twitter-color:					  #55acee;
+$google-color:					  #e51c23;
+$facebook-color: 				  #3b5998;
+
+$notify-message-primary-background:              $primary-background;
+$notify-message-primary-color:                   $primary-color;
+$notify-message-success-background:              $success-background;
+$notify-message-success-color:                   $success-color;
+$notify-message-warning-background:              $warning-background;
+$notify-message-warning-color:                   $warning-color;
+$notify-message-danger-background:               $danger-background;
+$notify-message-danger-color:                    $danger-color;
+$button-primary-background:                      $primary-background;
+$button-primary-color:                           $primary-color;
+$button-primary-hover-background:                darken($primary-background, $hover-amount);
+$button-primary-hover-color:                     darken($primary-color, $hover-amount);
+$button-primary-active-background:               darken($primary-background, $hover-amount);
+$button-primary-active-color:                    darken($primary-color, $hover-amount);
+$button-success-background:                      $success-background;
+$button-success-color:                           $success-color;
+$button-success-hover-background:                darken($success-background, $hover-amount);
+$button-success-hover-color:                     darken($success-color, $hover-amount);
+$button-success-active-background:               darken($success-background, $hover-amount);
+$button-success-active-color:                    darken($success-color, $hover-amount);
+$button-danger-background:                       $danger-background;
+$button-danger-color:                          	 $danger-color;
+$button-danger-hover-background:                 darken($danger-background, $hover-amount);
+$button-danger-hover-color:                      darken($danger-color, $hover-amount);
+$button-danger-active-background:                darken($danger-background, $hover-amount);
+$button-danger-active-color:                     darken($danger-color, $hover-amount);
+$button-disabled-background:                     $primary-disabled-background;
+$button-disabled-color:                          $primary-disabled-color;
+$button-link-color:                              $primary-background;
+$button-link-hover-color:                        darken($primary-background, $hover-amount);
+$button-link-disabled-color:                     desaturate($primary-background, $disabled-amount);
+$panel-box-primary-background:                   $primary-background;
+$panel-box-primary-color:                        $primary-color;
+$panel-box-primary-title-color:                  $warning-background;
+$panel-box-secondary-background:                 $success-background;
+$panel-box-secondary-color:                      $success-color;
+$panel-box-secondary-title-color:                $success-color;
+$text-primary-color:                             $primary-background;
+$text-success-color:                             $success-background;
+$text-warning-color:                             $warning-background;
+$text-danger-color:                              $danger-background;
+
+html, body {
+	height: 100%;
+	background-color: $primary-color;
+	overflow: auto;
+}
+
+body	{
+	overflow-y: scroll !important ;
+}
+
+.bold-header {
+	font-family: 'Alegreya Sans SC', sans-serif;
+	font-weight: bolder;
+	font-size: 3em;
+	color: $color-1;
+}
+
+.basic-link {
+	color: $basic-black;
+
+	&:hover {
+		color: lighten($basic-black, 8%);
+		text-decoration: none;
+	}
+}
+
+.panel-button {
+	padding: 0.5em;
+	box-shadow: 0 0 1px rgba(0, 0, 0, 0.2);
+	border-radius: 0.25em;
+	font-size: 1.5rem;
+	cursor: pointer;
+
+	&.disabled, &.disabled:hover {
+		color: $primary-disabled-color;
+		background-color: $primary-disabled-background;
+		cursor: default;
+	}
+
+	&:hover {
+		color: $primary-hover-color;
+		background-color: $primary-hover-background;
+	};
+}
+
+.scroll-container {
+	overflow-y: auto;
+	max-height: 60vh;
+}
+
+@mixin vendor($background, $text) {
+	font-weight: bold !important;
+	text-transform: uppercase !important;
+	color: $text !important;
+	background-color: $background !important;
+
+	&:hover {
+		color: darken($text, 10%) !important;
+		background-color: darken($background, 10%) !important;
+	}
+
+	&:active {
+		color: darken($text, 10%) !important;
+		background-color: darken($background, 10%) !important;
+	}
+
+}
+
+.uk-twitter {
+	@include vendor($twitter-color, whitesmoke);
+}
+
+.uk-google {
+	@include vendor($google-color, whitesmoke);
+}
+
+.uk-facebook {
+	@include vendor($facebook-color, whitesmoke);
+}
+
+.uk-panel-badge.uk-profit {
+	cursor: default;
+	background-color: $color-1;
+	color: $dark-color;
+}
+
+.uk-panel-badge.uk-loss {
+	cursor: default;
+	background-color: $color-3;
+	color: $light-color;
+}
+
+.uk-flex {
+	display: flex;
+	justify-content: space-around;
+}
+
+.uk-overflow-vertical {
+	overflow-y: auto;
+}
+
+.uk-clear-both {
+	clear: both;
+}
+
+// SO THAT WE CAN VERTICALLY ALIGN A HEADER WITHOUT REDUCING FONT SIZE
+.uk-vertical-align-header {
+  	display: inline-block;
+  	max-width: 100%;
+
+  	&-middle {
+	  	vertical-align: middle;
+	}
+}
+
+.uk-grid.uk-tight-panels:not(.uk-grid-preserve)  > * > .uk-panel + .uk-panel {
+	margin-top: 10px;
+}
+
+.uk-tight-panels .uk-panel + .uk-panel {
+	margin-top: 10px;
+}
+
+$icon-button-large-width: 70px;
+$icon-button-large-height: $icon-button-large-width;
+$icon-button-background: $primary-background;
+$icon-button-color: $primary-color;
+$icon-button-disabled-background: $button-disabled-background;
+$icon-button-disabled-color: $button-disabled-color;
+
+.uk-icon-button-large {
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    display: inline-block;
+    width: $icon-button-large-width;
+    height: $icon-button-large-height;
+    border-radius: $icon-button-border-radius;
+    background: $icon-button-background;
+    line-height: $icon-button-large-height;
+    color: $icon-button-color;
+    font-size: $icon-button-font-size;
+    text-align: center;
+
+    transition: background-color 0.5s, color 0.5s;
+
+    @include hook-icon-button();
+
+    &:hover, &:focus {
+	    background-color: darken($icon-button-background, 10%);
+	    color: darken($icon-button-color, 10%);
+	    text-decoration: none;
+	    cursor: pointer;
+	    outline: none;
+	    @include hook-icon-button-hover();    	
+    }
+
+    &:active {
+	    background-color: darken($icon-button-background, 10%);
+	    color: darken($icon-button-color, 10%);
+	    @include hook-icon-button-active();
+    }
+}
+
+.uk-list-icons {
+
+	margin-right: $icon-button-font-size / 2;
+	padding-left: 0;
+
+	>* {
+		@extend .uk-margin-left;
+		display: inline;
+
+		i, button, a  {
+			@extend .uk-icon-button-large;
+			@extend .uk-icon-medium;
+			&:before {
+				vertical-align: -12% !important;
+			}
+
+			&.uk-active {
+			    background-color: $warning-background;
+			}
+
+			&.uk-disabled {
+			    background-color: $icon-button-disabled-background;
+			    color: $icon-button-disabled-color;
+			}
+		}
+	}
+}
+
+.uk-big-button {
+	padding: $button-padding-horizontal;
+	border-radius: 2px
+}
+
+$icon-font-path: "/fonts/uikit";
+
+@import "./third-party/uikit/scss/uikit";
+@import "./third-party/uikit/scss/components/autocomplete";

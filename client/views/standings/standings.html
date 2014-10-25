@@ -1,0 +1,46 @@
+<template name="Standings">
+  	<div class="uk-margin-top uk-width-large-4-5 uk-width-medium-2-3 uk-width-small-1-1 uk-container-center">
+  		<div class="uk-grid uk-tight-panels">
+			<div class="uk-width-large-1-2 uk-width-small-1-1 uk-overflow-vertical">
+				<ul class="uk-subnav uk-subnav-line uk-text-center">
+				    {{#each categoryList}}
+				    	<li>{{#unless isActive ../category1}}<a class="basic-link" data-category="category1">{{categoryShort}}</a>{{else}}<span>{{categoryShort}}</span>{{/unless}}</li>
+				    {{/each}}
+				</ul>
+				{{> standingsTable category1}}
+			</div>
+			<div class="uk-width-large-1-2 uk-width-small-1-1 uk-overflow-vertical uk-hidden-medium uk-hidden-small">
+				<ul class="uk-subnav uk-subnav-line uk-text-center">
+				    {{#each categoryList}}
+				    	<li>{{#unless isActive ../category2}}<a class="basic-link" data-category="category2">{{categoryShort}}</a>{{else}}<span>{{categoryShort}}</span>{{/unless}}</li>
+				    {{/each}}
+				</ul>
+				{{> standingsTable category2}}
+			</div>
+		</div>
+	</div>
+</template>
+
+<template name="standingsTable">
+	<h2 class="uk-heading-large uk-text-center uk-margin-top-remove">{{cat.category}}</h2>
+	<div class="scroll-container uk-tight-panels">
+		{{#each users}}
+			{{> standing}}
+		{{/each}}
+	</div>
+</template>
+
+<template name="standing">
+	<div class="uk-panel uk-panel-box uk-panel-box-primary uk-width-1-1">
+		<div class="uk-display-inline uk-float-left">{{> avatar userId=this._id class='circle'}}</div>
+		<div class="uk-panel-title uk-float-left uk-margin-left uk-margin-small-top">{{profile.name}}</div>
+		<div class="uk-panel-badge panel-button uk-profit">{{getStat ../cat.topRightCat}} {{../cat.topRightLabel}}</div>
+		<div class="uk-clearfix"></div>
+		<p class="uk-display-inline uk-float-left uk-margin-small-top">
+			Gold: <span class="uk-text-danger">{{profile.medals.gold}}</span> &nbsp; 
+			Silver: <span class="uk-text-danger">{{profile.medals.silver}}</span> &nbsp; 
+			Bronze: <span class="uk-text-danger">{{profile.medals.bronze}}</span>
+		</p>
+		<p class="uk-display-inline uk-float-right uk-margin-small-top">Joined on <span class="uk-text-warning">{{formatDate createdAt}}</span></p>
+	</div>
+</template>

@@ -1,0 +1,29 @@
+<template name="MasterLayout">
+	{{> Topbar}}
+	{{> yield}}
+</template>
+
+<template name="Topbar">
+	<div class="uk-flex uk-width-large-1-2 uk-width-medium-2-3 uk-width-small-1-1 uk-container-center uk-list-icons uk-margin-small-top">
+		{{#each mainMenu}}
+	    	{{#if status}}<span><i class="uk-icon-{{icon}} {{#if active}}uk-active{{/if}}" data-link="{{route}}"></i></span>{{/if}}
+		{{/each}}
+	</div>
+</template>
+
+<template name="confirmModalWrapper">
+	<div class="uk-modal">
+		{{> confirmModal}}
+	</div>
+</template>
+
+<template name="confirmModal">
+    <div class="uk-modal-dialog">
+        <a class="uk-modal-close uk-close"></a>
+        <h1>{{header}}</h1>
+    	{{{content}}}
+        <button type="button" class="uk-button uk-margin-left uk-float-right" data-action="cancel">Cancel</button>
+        <button type="button" class="uk-button uk-button-primary uk-float-right" data-action="confirm">Confirm</button>
+        <div class="uk-clearfix"></div>
+    </div>
+</template>

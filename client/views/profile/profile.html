@@ -1,0 +1,36 @@
+<template name="Profile">
+ 	<div class="uk-margin-top uk-width-large-3-5 uk-width-medium-3-4 uk-width-small-1-1 uk-container-center">
+  		<div class="uk-grid">
+			<div class="uk-width-large-2-3 uk-width-small-1-1 uk-float-left">
+				{{> userDetails currentUser}}
+			</div>
+			<div class="uk-width-large-1-3 uk-width-small-1-1 uk-float-left uk-text-center">
+				{{> profileButtons}}
+			</div>
+		</div>
+	</div>
+</template>
+
+<template name="userDetails">
+	<div class="uk-display-inline uk-float-left uk-margin-right">
+		{{> avatar userId=this._id class='large circle'}}
+	</div>
+	<div class="uk-display-inline uk-float-left">
+		<h2>Name: <span class="uk-text-primary">{{profile.name}}</span></h2>
+		<h2>Joined on: <span class="uk-text-primary">{{formatDate createdAt}}</span></h2>
+		<h2 class="uk-float-left uk-margin-right">Medals: </h2>
+		<ul class="uk-list uk-float-left">
+			<li><h4>Gold: <span class="uk-text-primary">{{profile.medals.gold}}</span></h4></li>
+			<li><h4>Silver: <span class="uk-text-primary">{{profile.medals.silver}}</span></h4></li>
+			<li><h4>Bronze: <span class="uk-text-primary">{{profile.medals.bronze}}</span></h4></li>
+		</ul>
+		<div class="uk-clearfix"></div>
+		<h2>Total Points: <span class="uk-text-primary">{{profile.total_points}}</span></h2>
+		<h2>Average Weekly Points: <span class="uk-text-primary">{{profile.ave_points}}</span></h2>
+	</div>
+</template>
+
+<template name="profileButtons">
+	<button class="uk-button uk-button-danger uk-button-large uk-margin-top uk-width-1-1" type="button" data-action="logout">Logout</button>
+	<button class="uk-button uk-button-danger uk-button-large uk-margin-top uk-width-1-1" type="button" data-action="delete-account">Delete Account</button>
+</template>

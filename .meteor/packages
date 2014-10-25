@@ -4,5 +4,23 @@
 # but you can also edit it by hand.
 
 meteor-platform
-autopublish
-insecure
+aldeed:collection2
+fourseven:scss
+matb33:collection-hooks
+http
+accounts-facebook
+accounts-twitter
+accounts-google
+accounts-ui-unstyled
+iron:router@1.0.0-pre4
+gandev:server-eval
+service-configuration
+bengott:avatar
+zimme:iron-router-active
+percolatestudio:synced-cron
+wizonesolutions:underscore-string
+mrt:moment
+meteorhacks:npm
+
+
+npm-container
