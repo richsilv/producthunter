@@ -6,17 +6,13 @@
 meteor-platform
 aldeed:collection2
 fourseven:scss
-matb33:collection-hooks
 http
 accounts-facebook
 accounts-twitter
 accounts-google
 accounts-ui-unstyled
-iron:router@1.0.0-pre4
-gandev:server-eval
 service-configuration
 bengott:avatar
-zimme:iron-router-active
 percolatestudio:synced-cron
 wizonesolutions:underscore-string
 mrt:moment
@@ -24,3 +20,11 @@ meteorhacks:npm
 
 
 npm-container
+iron:controller@1.0.0-pre4
+iron:core@1.0.0-pre4
+iron:dynamic-template@1.0.0-pre4
+iron:layout@1.0.0-pre4
+iron:location@1.0.0-pre4
+iron:middleware-stack@1.0.0-pre4
+iron:router@1.0.0-pre4
+iron:url@1.0.0-pre4

@@ -44,7 +44,7 @@ Template.myHunts.helpers({
       var thisHunt = Hunts.findOne(hunt._id);
       if (!thisHunt) return {};
       else return _.extend(thisHunt, hunt, {
-        profit: thisHunt.votes_count - hunt.bought_price,
+        profit: thisHunt.points - (2 * hunt.bought_price),
         myHunt: true
       });
     }).sort(function(a, b) {return a.profit < b.profit;});
@@ -53,7 +53,7 @@ Template.myHunts.helpers({
 });
 
 Template.hunt.events({
-  'click [data-action="buy"]': function () {
+  'click [data-action="buy"]:not(.disabled)': function () {
     confirmModal({
       header: "Purchase Hunt?",
       content: "<p>Are you sure you want to purchase this hunt for <strong>" +

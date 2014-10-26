@@ -11,12 +11,14 @@ Template.Help.events({
 });
 
 Template.Help.helpers({
-  /*
-   * Example:
-   *  items: function () {
-   *    return Items.find();
-   *  }
-   */
+
+  defaultPoints: function() {
+    return App.defaultPoints;
+  },
+  purchaseFee: function() {
+    return App.purchaseFee
+  }
+
 });
 
 /*****************************************************************************/

@@ -44,6 +44,9 @@ App.helpers = {
 	},
 	positive: function(num) {
 		return num >= 0;
+	},
+	exists: function(property) {
+		return property in this;
 	}
 };
 

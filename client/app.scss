@@ -67,8 +67,8 @@ $panel-box-primary-background:                   $primary-background;
 $panel-box-primary-color:                        $primary-color;
 $panel-box-primary-title-color:                  $warning-background;
 $panel-box-secondary-background:                 $success-background;
-$panel-box-secondary-color:                      $success-color;
-$panel-box-secondary-title-color:                $success-color;
+$panel-box-secondary-color:                      $color-1;
+$panel-box-secondary-title-color:                $color-1;
 $text-primary-color:                             $primary-background;
 $text-success-color:                             $success-background;
 $text-warning-color:                             $warning-background;
@@ -80,8 +80,22 @@ html, body {
 	overflow: auto;
 }
 
+html * {
+    transition: background-color 0.5s, color 0.5s;
+    -webkit-transition: background-color 0.5s, color 0.5s;
+}
+
 body	{
 	overflow-y: scroll !important ;
+}
+
+body a, body .uk-subnav li a {
+	color: $color-1;
+
+	&:hover {
+		color: $primary-hover-background;
+		text-decoration: none;
+	}
 }
 
 .bold-header {
@@ -154,6 +168,11 @@ body	{
 	@include vendor($facebook-color, whitesmoke);
 }
 
+body .uk-placeholder {
+	height: 50px;
+	background-color: rgba(255, 255, 255, 0.2);
+}
+
 .uk-panel-badge.uk-profit {
 	cursor: default;
 	background-color: $color-1;
@@ -177,6 +196,10 @@ body	{
 
 .uk-clear-both {
 	clear: both;
+}
+
+.uk-double-margin-top {
+	margin-top: 30px !important;
 }
 
 // SO THAT WE CAN VERTICALLY ALIGN A HEADER WITHOUT REDUCING FONT SIZE
@@ -204,6 +227,25 @@ $icon-button-color: $primary-color;
 $icon-button-disabled-background: $button-disabled-background;
 $icon-button-disabled-color: $button-disabled-color;
 
+.uk-panel {
+	.uk-panel-badge {
+	    @media screen and (max-width: $breakpoint-small) {
+	    	clear: both;
+	    	position: static;
+	    	display: inline-block;
+	    	float: right;
+	    	margin-bottom: 10px;
+	    	font-size: 1.2rem;
+	    }
+	}
+	p {
+	    @media screen and (max-width: $breakpoint-small) {
+	    	text-align: center;
+	    	width: 100%;
+	    }		
+	}
+}
+
 .uk-icon-button-large {
     -moz-box-sizing: border-box;
     box-sizing: border-box;
@@ -216,8 +258,6 @@ $icon-button-disabled-color: $button-disabled-color;
     color: $icon-button-color;
     font-size: $icon-button-font-size;
     text-align: center;
-
-    transition: background-color 0.5s, color 0.5s;
 
     @include hook-icon-button();
 
@@ -234,6 +274,13 @@ $icon-button-disabled-color: $button-disabled-color;
 	    background-color: darken($icon-button-background, 10%);
 	    color: darken($icon-button-color, 10%);
 	    @include hook-icon-button-active();
+    }
+
+    @media screen and (max-width: $breakpoint-small) {
+    	width: $icon-button-large-width / 1.5;
+    	height: $icon-button-large-height / 1.5;
+    	line-height: $icon-button-large-height / 1.5;
+    	font-size: $icon-button-font-size / 1.5;
     }
 }
 
@@ -273,4 +320,4 @@ $icon-button-disabled-color: $button-disabled-color;
 $icon-font-path: "/fonts/uikit";
 
 @import "./third-party/uikit/scss/uikit";
-@import "./third-party/uikit/scss/components/autocomplete";
+@import "./third-party/uikit/scss/components/placeholder";

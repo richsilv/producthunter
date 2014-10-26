@@ -73,16 +73,16 @@ function getPosts() {
 
 };
 
-function dailyCron(date) {
+dailyCron = function(date) {
 
 	date = date || new Date();
 	var oldDate = new Date(date);
 	oldDate.setDate(date.getDate() - 1);
-	var oldDateString = _.pad(oldDate.getFullYear(), 4, "0") + '-' + _.pad(oldDate.getMonth() + 1, 2,"0") + '-' + pad(oldDate.getoldDate(), 2, "0"),
+	var oldDateString = _.pad(oldDate.getFullYear(), 4, "0") + '-' + _.pad(oldDate.getMonth() + 1, 2,"0") + '-' + _.pad(oldDate.getDate(), 2, "0"),
 		weekDay = date.getDay(),
 		oldWeekDay = oldDate.getDay(),
 		users = Meteor.users.find({'profile.week_ends': oldWeekDay}),
-		hunts = Hunts.find({day: oldWeekDay});
+		hunts = Hunts.find({day: oldDateString});
 
 	users.forEach(function(user) {
 		var update = {},
@@ -100,24 +100,24 @@ function dailyCron(date) {
 		update['$push'] = {
 			'profile.week_history': {
 				week_ended: oldWeekDay,
-				points: user.profile.points
+				points: user.profile.points - App.defaultPoints
 			},
 			'profile.hunt_history': {$each: hunt_history}
 		};
 		update['$set'] = {
 			'profile.live_hunts': [],
 			'profile.points': App.defaultPoints,
-			'profile.ave_points': (user.profile.total_points + user.profile.points) / (user.profile.total_weeks + 1)
+			'profile.ave_points': (user.profile.total_points + user.profile.points - App.defaultPoints) / (user.profile.total_weeks + 1)
 		};
 		update['$inc'] = {
-			'profile.total_points': user.profile.points,
+			'profile.total_points': user.profile.points - App.defaultPoints,
 			'profile.total_weeks': 1
 		};
 		['gold', 'silver', 'bronze'].forEach(function (colour) {
 			if (medal === colour) update['$inc']['profile.medals.' + colour] = 1;
 		});
 
-		Meteor.users.update(user, update);
+		Meteor.users.update(user._id, update);
 	});
 
 	hunts.forEach(function(hunt) {

@@ -90,7 +90,7 @@ Meteor.users.updatePoints = function(query) {
 		var points = App.defaultPoints;
 		_.each(user.profile.live_hunts, function(hunt) {
 			var thisHunt = Hunts.findOne(hunt._id);
-			points += thisHunt.votes_count - hunt.bought_price;
+			points += thisHunt.points - (2 * hunt.bought_price);
 		});
 
 		console.log("Updating points to " + points);

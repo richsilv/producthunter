@@ -43,20 +43,27 @@
 		{{#each myHunts}}
 			{{> hunt}}
 		{{/each}}
+		{{#unless myHunts}}
+			<div class="uk-placeholder"></div>
+		{{/unless}}
 	</div>
 </template>
 
 <template name="hunt">
-	<div class="uk-panel uk-panel-box {{#if affordable}}uk-panel-box-primary{{/if}}{{#if profit}}uk-panel-box-secondary{{/if}} uk-width-1-1">
+	<div class="uk-panel uk-panel-box {{#if affordable}}uk-panel-box-primary{{/if}} {{#if bought_at}}uk-panel-box-secondary{{/if}} uk-width-1-1">
 		<div class="uk-panel-title">{{name}}</div>
-		{{#if myHunt}}
+		{{#if exists 'profit'}}
 			<div class="uk-panel-badge panel-button {{#if positive profit}}uk-profit{{else}}uk-loss{{/if}}">Profit: {{profit}} Points</div>
 		{{else}}
 			<div class="uk-panel-badge panel-button {{#unless affordable}}disabled{{/unless}}" data-action="buy">
 				<span class="{{#if affordable}}uk-text-warning{{/if}}">{{points}}</span> Points
 			</div>
 		{{/if}}
-		<a href="{{redirect_url}}" class="basic-link uk-display-inline uk-float-left uk-margin-small-top">{{tagline}}</a>
+		<a href="{{redirect_url}}" target="_blank" class="basic-link uk-display-inline uk-float-left uk-margin-small-top">{{tagline}}</a>
+		{{#if bought_at}}
+		<p class="uk-display-inline uk-float-right uk-margin-small-top">Bought on <span class="uk-text-warning">{{formatDate bought_at}}</span></p>
+		{{else}}
 		<p class="uk-display-inline uk-float-right uk-margin-small-top">Owned by <span class="uk-text-warning">{{buyers}}</span> hunters</p>
+		{{/if}}
 	</div>
 </template>

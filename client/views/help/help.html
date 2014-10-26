@@ -1,19 +1,21 @@
 <template name="Help">
-  	<div class="uk-margin-top uk-width-large-3-5 uk-width-medium-2-3 uk-width-small-1-1 uk-container-center">
+  	<div class="uk-double-margin-top uk-width-large-3-5 uk-width-medium-2-3 uk-width-small-1-1 uk-container-center">
   	<h1>What on earth is this, then?</h1>
   	<p>It's the <a href="http://www.producthunt.com">Product Hunt</a> equivalent of Fantasy Football. You buy hunts that you think will become popular, and earn points if they do.  Points mean medals (which only exist on the database, sadly), and all sorts of kudos.</p>
   	<h1>What's Product Hunt?</h1>
   	<p>Seriously?  It's the most exciting thing on the internet.  Check <a href="http://www.producthunt.com">this</a> out, preferably several times every day.  And then come back here.</p>
   	<h1>How do I play?</h1>
-  	<p>It's very simple.  At the start of every week you get {{startingPoints}} points to play with.  You can use these to buy a hunt that's been posted that day at any time.  The price you pay is the current number of upvotes <emph>plus</emph> a purchase fee of {{purchasePoints}} points.  So choose carefully - if you buy something that nobody likes you'll be left in big hole...</p>
+  	<p>It's very simple.  At the start of every week you get {{defaultPoints}} points to play with.  You can use these to buy a hunt that's been posted that day at any time.  The price you pay is the current number of upvotes <emph>plus</emph> a purchase fee of {{purchaseFee}} points.  So choose carefully - if you buy something that nobody likes you'll be left in big hole...</p>
   	<h1>What next?</h1>
   	<p>As your hunts get upvoted, you score points, which you can either leave in the bank or spend on more hunts.  You keep scoring for the rest of the week, but you can only buy today's hunts.</p>
   	<h1>What happens at the end of the week?</h1>
-  	<p>Your total score is added up, and if you've done well enough then you get awarded a medal (gold, silver or bronze).  Your live hunts are cleared and your points total is returned to {{startingPoints}}.</p>
+  	<p>Your total score is added up, and if you've done well enough then you get awarded a medal (gold, silver or bronze).  Your live hunts are cleared and your points total is returned to {{defaultPoints}}.</p>
   	<h1>Why the hell do you take away my hard-earned points???</h1>
   	<p>Otherwise it would be no fun, because some people who backed really popular hunts early on would just be able to buy everything from then on, whilst those who didn't choose so well would be stuck without enough points to buy anything.  So it keeps things interesting.</p>
   	<h1>How come my week ends on <span class="uk-text-small">[INSERT DAY]</span> when my buddy's ends on <span class="uk-text-small">[INSERT ALTERNATIVE DAY]</span>?</h1>
   	<p>It's totally random in a vague effort to stop people gaming it.  If you're really that bothered you can repeatedly delete your account and sign up again until you get the day you want.  I won't hold it against you.</p>
+    <h1>Why won't it let me sign up?</h1>
+    <p>There is a limit to the number of players at present in a desperate attempt to stop the whole thing falling apart.  If more people want to play, I will make this possible as soon as I can.</p>
   	<h1>What's up with the colour scheme?</h1>
   	<p>It was a hackathon, alright?  I can barely see.</p>
   	<h1>Stop talking rubbish, I want to play!</h1>
