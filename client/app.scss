@@ -98,6 +98,13 @@ body a, body .uk-subnav li a {
 	}
 }
 
+.uk-grid > * {
+	@media screen and (max-width: $breakpoint-small) {
+		padding-left: 10px !important;
+		padding-right:10px !important;
+	}
+}
+
 .bold-header {
 	font-family: 'Alegreya Sans SC', sans-serif;
 	font-weight: bolder;

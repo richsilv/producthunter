@@ -50,7 +50,7 @@
 </template>
 
 <template name="hunt">
-	<div class="uk-panel uk-panel-box {{#if affordable}}uk-panel-box-primary{{/if}} {{#if bought_at}}uk-panel-box-secondary{{/if}} uk-width-1-1">
+	<div class="uk-panel uk-panel-box {{#if affordable}}uk-panel-box-primary{{/if}} {{#if bought_at}}uk-panel-box-secondary{{/if}} uk-width-1-1" data-uk-tooltip={{affordable}} title="{{#if affordable}}Click on my price to buy me!{{/if}}">
 		<div class="uk-panel-title">{{name}}</div>
 		{{#if exists 'profit'}}
 			<div class="uk-panel-badge panel-button {{#if positive profit}}uk-profit{{else}}uk-loss{{/if}}">Profit: {{profit}} Points</div>

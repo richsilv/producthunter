@@ -85,7 +85,7 @@ Template.hunt.events({
 Template.hunt.helpers({
   affordable: function () {
     var user = Meteor.user();
-    return user && this.points <= user.profile.points;
+    return user && this.points <= user.profile.points && _.pluck(user.profile.live_hunts, '_id').indexOf(this._id) === -1;
   }
 });
 
