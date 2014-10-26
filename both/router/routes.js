@@ -9,7 +9,7 @@ Router.configure({
 
 Router.onBeforeAction(function() {
 	if (!Meteor.user()) {
-		// this.redirect('login');
+		this.redirect('login');
 	}
 	this.next();
 }, {except: ['login', 'help']});
