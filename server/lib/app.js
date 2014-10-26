@@ -10,6 +10,6 @@ _.extend(App, {
 			return points >= k ? i : s;
 		}, null);
 	},
-	maxUsers: 100
+	maxUsers: 1000
 
 });
