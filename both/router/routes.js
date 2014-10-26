@@ -1,6 +1,8 @@
 /*****************************************************************************/
 /* Client and Server Routes */
 /*****************************************************************************/
+Router.setTemplateNameConverter(function (str) { return Iron.utils.classCase(str); });
+
 Router.configure({
   layoutTemplate: 'MasterLayout',
   loadingTemplate: 'Loading',

@@ -1,11 +1,11 @@
 <template name="History">
   	<div class="uk-margin-top uk-width-large-4-5 uk-width-medium-2-3 uk-width-small-1-1 uk-container-center">
   		<div class="uk-grid uk-tight-panels">
+			<div class="uk-width-large-1-2 uk-width-small-1-1 uk-overflow-vertical uk-overflow-horizontal-hidden">
+				{{> historyChart}}
+			</div>
 			<div class="uk-width-large-1-2 uk-width-small-1-1 uk-overflow-vertical">
 				{{> huntHistory}}
-			</div>
-			<div class="uk-width-large-1-2 uk-width-small-1-1 uk-overflow-vertical uk-hidden-medium uk-hidden-small">
-				{{> historyGraph}}
 			</div>
 		</div>
 	</div>
@@ -17,11 +17,14 @@
 		{{#each huntRecords}}
 			{{> hunt}}
 		{{/each}}
+		{{#unless huntRecords}}
+			<div class="uk-placeholder"></div>
+		{{/unless}}
 	</div>
 </template>
 
-<template name="historyGraph">
-	<h2 class="uk-heading-large uk-text-center">Performance Graph</h2>
-	<div class="uk-width-1-1" style="background-image: url('http://placehold.it/400x300&text=Graph+to+go+here'); background-position: center center; height: 300px"></div>
+<template name="historyChart">
+	<h2 class="uk-heading-large uk-text-center">Performance Chart</h2>
+	{{> highchartsHelper chartId="points-chart" width="100%" height="100%" chartObject=pointsHistoryChart}}
 </template>
 
