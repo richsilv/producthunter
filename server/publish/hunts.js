@@ -10,10 +10,10 @@ Meteor.publish('hunts/current', function() {
 
 Meteor.publish('hunts/live', function() {
     var user = Meteor.users.findOne(this.userId),
-        live_hunts = _.pluck(user.live_hunts, '_id');
+        liveHunts = user && _.pluck(user.profile.live_hunts, '_id');
     query = {
-        id: {
-            $in: historyIds
+        _id: {
+            $in: liveHunts
         }
     };
     return Hunts.find(query);
@@ -21,7 +21,7 @@ Meteor.publish('hunts/live', function() {
 
 Meteor.publish('hunts/user', function(query, options) {
     var user = Meteor.users.findOne(this.userId),
-        historyIds = _.pluck(user.hunt_history, '_id');
+        historyIds = user && _.pluck(user.profile.hunt_history, '_id');
     query = query || {};
     query._id = {
         $in: historyIds
