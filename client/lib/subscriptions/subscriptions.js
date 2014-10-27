@@ -4,6 +4,7 @@ Tracker.autorun(function() {
 
 	subscriptions.hunts = Meteor.subscribe('hunts/current');
 	subscriptions.thisUser = Meteor.subscribe('users/me');
-	subscriptions.standingsCategories = Meteor.subscribe('standings_categories')
+	subscriptions.myHunts = Meteor.subscribe('hunts/live');
+	subscriptions.standingsCategories = Meteor.subscribe('standings_categories');
 
 });
