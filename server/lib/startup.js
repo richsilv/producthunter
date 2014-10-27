@@ -1,24 +1,26 @@
 var phRoot = 'https://api.producthunt.com/v1/',
-	phToken = '5def860d4b60e2db4868b82c2f7369802d755ab6480e19477a05182bb9616109';
+	phToken = '5def860d4b60e2db4868b82c2f7369802d755ab6480e19477a05182bb9616109',
+	Future = Meteor.npmRequire('fibers/future');
 
 SyncedCron.add({
-  name: 'Daily process',
-  schedule: function(parser) {
-    return parser.text('at 05:00 am');
-  }, 
-  job: function() {
-    return dailyCron();
-  }
+	name: 'Daily process',
+	schedule: function(parser) {
+		return parser.text('at 05:00 am');
+	},
+	job: function() {
+		return dailyCron();
+	}
 });
 
 SyncedCron.add({
-  name: 'Reload Hunts',
-  schedule: function(parser) {
-    return parser.text('every 1 mins');
-  }, 
-  job: function() {
-    return getPosts();
-  }
+	name: 'Reload Hunts',
+	schedule: function(parser) {
+		return parser.text('every 1 mins');
+	},
+	job: function() {
+		var posts = getPosts();
+		return posts;
+	}
 });
 
 Meteor.startup(function() {
@@ -29,6 +31,8 @@ Meteor.startup(function() {
 });
 
 function getPosts() {
+
+	var fut = new Future();
 
 	HTTP.get(phRoot + 'posts', {
 		headers: {
@@ -42,21 +46,27 @@ function getPosts() {
 	}, function(err, res) {
 		var changedHunts = [];
 		if (err) {
-			throw new Meteor.Error(500, 'ProductHunt API Error', err);
+			fut.throw(new Meteor.Error(500, 'ProductHunt API Error', err));
 		} else {
-			res.data.posts.forEach(function (hunt) {
+			res.data.posts.forEach(function(hunt) {
 				hunt.points = hunt.votes_count + App.purchaseFee;
-				var oldHunt = Hunts.findOne({id: hunt.id});
+				var oldHunt = Hunts.findOne({
+					id: hunt.id
+				});
 				if (oldHunt) {
 					delete hunt.created_at;
 					delete hunt.user;
 					try {
-						Hunts.update({id: hunt.id}, {$set: hunt});
-					} catch(e) {
+						Hunts.update({
+							id: hunt.id
+						}, {
+							$set: hunt
+						});
+					} catch (e) {
 						console.log(Error, e, "at hunt", hunt, 'old hunt is', oldHunt);
 					}
 					changedHunts.push(oldHunt._id);
-				} else {				
+				} else {
 					hunt.created_at = new Date(hunt.created_at);
 					hunt.added_at = new Date();
 					if (hunt.user.created_at) hunt.user.created_at = new Date(hunt.user.created_at);
@@ -65,11 +75,16 @@ function getPosts() {
 					Hunts.insert(hunt);
 				}
 			});
-			var updatedUsers = Meteor.users.updatePoints({'profile.live_hunts._id': {$in: changedHunts}});
+			var updatedUsers = Meteor.users.updatePoints({
+				'profile.live_hunts._id': {
+					$in: changedHunts
+				}
+			});
 			console.log("Updated points for " + updatedUsers.length + " users");
-			return res.data.posts.length;
+			fut.return(res.data.posts.length);
 		}
-	});	
+	});
+	return fut.wait();
 
 };
 
@@ -78,11 +93,17 @@ dailyCron = function(date) {
 	date = date || new Date();
 	var oldDate = new Date(date);
 	oldDate.setDate(date.getDate() - 1);
-	var oldDateString = _.pad(oldDate.getFullYear(), 4, "0") + '-' + _.pad(oldDate.getMonth() + 1, 2,"0") + '-' + _.pad(oldDate.getDate(), 2, "0"),
+	var oldDateString = _.pad(oldDate.getFullYear(), 4, "0") + '-' + _.pad(oldDate.getMonth() + 1, 2, "0") + '-' + _.pad(oldDate.getDate(), 2, "0"),
 		weekDay = date.getDay(),
 		oldWeekDay = oldDate.getDay(),
-		users = Meteor.users.find({'profile.week_ends': oldWeekDay}),
-		hunts = Hunts.find({day: oldDateString});
+		users = Meteor.users.find({
+			'profile.week_ends': oldWeekDay
+		}),
+		hunts = Hunts.find({
+			day: oldDateString
+		}),
+		usersCount = 0,
+		huntsCount = 0;
 
 	users.forEach(function(user) {
 		var update = {},
@@ -102,7 +123,9 @@ dailyCron = function(date) {
 				week_ended: oldWeekDay,
 				points: user.profile.points - App.defaultPoints
 			},
-			'profile.hunt_history': {$each: hunt_history}
+			'profile.hunt_history': {
+				$each: hunt_history
+			}
 		};
 		update['$set'] = {
 			'profile.live_hunts': [],
@@ -113,11 +136,11 @@ dailyCron = function(date) {
 			'profile.total_points': user.profile.points - App.defaultPoints,
 			'profile.total_weeks': 1
 		};
-		['gold', 'silver', 'bronze'].forEach(function (colour) {
+		['gold', 'silver', 'bronze'].forEach(function(colour) {
 			if (medal === colour) update['$inc']['profile.medals.' + colour] = 1;
 		});
 
-		Meteor.users.update(user._id, update);
+		usersCounts += Meteor.users.update(user._id, update);
 	});
 
 	hunts.forEach(function(hunt) {
@@ -125,7 +148,12 @@ dailyCron = function(date) {
 		update['$set'] = {
 			available: false
 		};
-		Hunts.update(hunt, update);
+		huntsCount += Hunts.update(hunt, update);
 	});
+
+	return {
+		hunts: huntsCount,
+		users: usersCount
+	};
 
 };

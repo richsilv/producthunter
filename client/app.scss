@@ -98,6 +98,10 @@ body a, body .uk-subnav li a {
 	}
 }
 
+em {
+	color: $basic-black !important;
+}
+
 .uk-grid > * {
 	@media screen and (max-width: $breakpoint-small) {
 		padding-left: 10px !important;
@@ -110,6 +114,19 @@ body a, body .uk-subnav li a {
 	font-weight: bolder;
 	font-size: 3em;
 	color: $color-1;
+	line-height: 1em;
+}
+
+.bold-subheader {
+	font-family: 'Alegreya Sans SC', sans-serif;
+	font-weight: bolder;
+	font-size: 2em;
+	color: $color-1;
+	line-height: 1em;
+}
+
+.bottom-border {
+	border-bottom: 1px solid $color-1;
 }
 
 .basic-link {
