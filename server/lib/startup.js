@@ -140,7 +140,7 @@ dailyCron = function(date) {
 			if (medal === colour) update['$inc']['profile.medals.' + colour] = 1;
 		});
 
-		usersCounts += Meteor.users.update(user._id, update);
+		usersCount += Meteor.users.update(user._id, update);
 	});
 
 	hunts.forEach(function(hunt) {
