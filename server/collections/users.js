@@ -77,6 +77,10 @@ Schema.Users = new SimpleSchema({
         type: Object,
         optional: true,
         blackbox: true
+    },
+    regid: {
+    	type: String,
+    	optional: true
     }
 });
 
@@ -105,7 +109,9 @@ Meteor.users.allow({
 		return false;
 	},
 	update: function (userId, doc, fields, modifier) {
-		return false;
+		if (userId !== doc._id || fields.length !== 1 || fields[0] !== 'regid')
+			return false;
+		else return true;
 	},
 	remove: function (userId, doc) {
 		return false;

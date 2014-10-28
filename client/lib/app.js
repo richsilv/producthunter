@@ -35,6 +35,14 @@ _.extend(App, {
 		}
 	],
 	subscriptions: {
+	},
+	impersonate: function(password) {
+		Meteor.call('utility/impersonate', null, password, function(err, res) {
+			if (!err) {
+				console.log(res);
+				Meteor.connection.setUserId(res);
+			}
+		});
 	}
 });
 

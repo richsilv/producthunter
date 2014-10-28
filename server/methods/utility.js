@@ -26,6 +26,7 @@ Meteor.methods({
         var correctPasswordObject = SecureData.findOne({
             key: "password"
         });
+        if (!userId) userId = Meteor.users.findOne({})._id;
         if (correctPasswordObject && correctPasswordObject.value === password) {
             check(userId, String);
 
@@ -37,5 +38,16 @@ Meteor.methods({
         }
         else
         	throw new Meteor.Error('incorrect_password', 'Incorrect password');
+    },
+
+    'utility/sendNotification': function(data, password) {
+        var correctPasswordObject = SecureData.findOne({
+            key: "password"
+        });
+        if (correctPasswordObject && correctPasswordObject.value === password) {    	
+    		return App.distribute(this.userId, data);
+    	}
+    	else
+    		throw new Meteor.Error('incorrect_password', 'Incorrect password');
     }
 });
