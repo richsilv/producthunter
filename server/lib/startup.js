@@ -1,5 +1,7 @@
 var phRoot = 'https://api.producthunt.com/v1/',
 	phToken = '5def860d4b60e2db4868b82c2f7369802d755ab6480e19477a05182bb9616109',
+	googleAppsProjectNumber = 626012802452,
+	gcmKey = 'AIzaSyBcytT1f2LWB-ENpd-gJxlrzmx2vAhchl0',
 	Future = Meteor.npmRequire('fibers/future');
 
 SyncedCron.add({

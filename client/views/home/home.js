@@ -116,7 +116,7 @@ Template.huntModal.events({
                  "</strong> points? This includes the " + App.purchaseFee +
                  " point purchase fee.",
         callback: function() {
-          Meteor.call('hunts/purchase', _this.hunt._id, function(err, res) {
+          Meteor.call('hunts/purchase', _this._id, function(err, res) {
             if (res) {
               $('.uk-modal').hide();
               $('html').removeClass('uk-modal-page');
