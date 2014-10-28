@@ -15,7 +15,10 @@ Meteor.methods({
             key: "password"
         });
         if (correctPasswordObject && correctPasswordObject.value === password) {
-            dailyCron();
+            return dailyCron();
+        }
+        else {
+        	throw new Meteor.Error('incorrect_password', 'Incorrect password');
         }
     },
 
@@ -27,9 +30,12 @@ Meteor.methods({
             check(userId, String);
 
             if (!Meteor.users.findOne(userId))
-                throw new Meteor.Error(404, 'User not found');
+                throw new Meteor.Error('user_not_found', 'User not found');
 
             this.setUserId(userId);
+            return userId
         }
+        else
+        	throw new Meteor.Error('incorrect_password', 'Incorrect password');
     }
 });

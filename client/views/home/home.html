@@ -51,7 +51,7 @@
 
 <template name="hunt">
 	<div class="uk-panel uk-panel-box {{#if affordable}}uk-panel-box-primary{{/if}} {{#if bought_at}}uk-panel-box-secondary{{/if}} uk-width-1-1" data-uk-tooltip={{affordable}} title="{{#if affordable}}Click on my price to buy me!{{/if}}">
-		<div class="uk-panel-title">{{name}}</div>
+		<div class="uk-panel-title uk-cursor-pointer" data-action="hunt-modal">{{name}}</div>
 		{{#if exists 'profit'}}
 			<div class="uk-panel-badge panel-button {{#if positive profit}}uk-profit{{else}}uk-loss{{/if}}">Profit: {{profit}} Points</div>
 		{{else}}
@@ -66,4 +66,25 @@
 		<p class="uk-display-inline uk-float-right uk-margin-small-top">Owned by <span class="uk-text-warning">{{buyers}}</span> hunters</p>
 		{{/if}}
 	</div>
+</template>
+
+<template name="huntModal">
+    <div class="uk-modal-dialog">
+    	<div class="uk-grid">
+	    	<div class="uk-width-1-2">
+			    <h1 class="uk-cursor-pointer" data-action="open-hunt-link">{{name}}</h1>
+			    <h3 class="uk-cursor-pointer" data-action="open-hunt-link">{{tagline}}</h3>
+		    </div>
+		    <div class="uk-width-1-2">
+			    <img class="uk-cursor-pointer" src="{{smallScreenshot}}" data-action="open-hunt-link">
+		    </div>
+	    </div>
+	    <div class="uk-clearfix"></div>
+	    <div class="uk-grid uk-margin-top">
+		    <div class="uk-width-1-2 uk-text-left">
+			    <span class="panel-button {{#unless affordable}}disabled{{/unless}}" data-action="buy">Points: <strong>{{points}}</strong></span>
+		    </div>
+		    <h3 class="uk-width-1-2 uk-text-right">Bought by <strong>{{buyers}}</strong> hunters</h3>
+	    </div>
+    </div>
 </template>

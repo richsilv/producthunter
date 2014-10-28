@@ -230,6 +230,44 @@ body .uk-placeholder {
 	margin-top: 30px !important;
 }
 
+.uk-cursor-pointer {
+	cursor: pointer;
+}
+
+// MODAL STYLING
+
+body .uk-modal-dialog {
+
+	background-color: $dark-color;
+	color: $color-1;
+	box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.3);
+
+	* {
+		color: $color-1;		
+	}
+
+	h1 {
+		color: $color-2;
+	}
+
+	.uk-button {
+		color: $color-3;
+	}
+
+	strong {
+		color: $color-2;
+	}
+
+	.disabled strong {
+		color: $button-disabled-color;
+	}
+
+	img {
+		border: 1px solid transparentize($color-2, 0.8);
+	}
+
+}
+
 // SO THAT WE CAN VERTICALLY ALIGN A HEADER WITHOUT REDUCING FONT SIZE
 .uk-vertical-align-header {
   	display: inline-block;
@@ -349,3 +387,4 @@ $icon-font-path: "/fonts/uikit";
 
 @import "./third-party/uikit/scss/uikit";
 @import "./third-party/uikit/scss/components/placeholder";
+@import "./third-party/uikit/scss/components/notify";

@@ -79,13 +79,68 @@ Template.hunt.events({
       },
       hunt: this
     });
+  },
+  'click [data-action="hunt-modal"]': function(event, template) {
+    generalModal('huntModal', _.extend(this,
+      {
+        affordable: template.view.template.__helpers.get('affordable').apply(this)
+      })
+    );
   }
 });
 
 Template.hunt.helpers({
   affordable: function () {
     var user = Meteor.user();
-    return user && this.points <= user.profile.points && _.pluck(user.profile.live_hunts, '_id').indexOf(this._id) === -1;
+    return (user && this.points <= user.profile.points && _.pluck(user.profile.live_hunts, '_id').indexOf(this._id) === -1) ?
+            "{delay:1000}" :
+            null;
+  }
+});
+
+Template.huntModal.events({
+  'click [data-action="open-hunt-link"]': function () {
+    window.open(this.redirect_url, '_blank');
+  },
+
+  'click [data-action="buy"]:not(.disabled)': function() {
+    var _this = this;
+    $('.uk-modal').hide();
+    Meteor.setTimeout(function() {
+      $('html').removeClass('uk-modal-page');
+      $('.uk-modal').remove();
+      confirmModal({
+        header: "Purchase Hunt?",
+        content: "<p>Are you sure you want to purchase this hunt for <strong>" +
+                 (_this.points) + 
+                 "</strong> points? This includes the " + App.purchaseFee +
+                 " point purchase fee.",
+        callback: function() {
+          Meteor.call('hunts/purchase', _this.hunt._id, function(err, res) {
+            if (res) {
+              $('.uk-modal').hide();
+              $('html').removeClass('uk-modal-page');
+              $('.uk-modal').remove();
+            }
+            else {
+              $.UIkit.notify({
+                  message : 'An error occurred! ' + err,
+                  status  : 'danger',
+                  timeout : 5000,
+                  pos     : 'top-center'
+              });
+            }
+          });
+        },
+        hunt: _this
+      });
+    }, 50);
+  }
+});
+
+Template.huntModal.helpers({
+  smallScreenshot: function () {
+    return this.screenshot_url['300px'];
   }
 });
 

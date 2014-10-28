@@ -81,3 +81,23 @@ confirmModal = function(options, postRender) {
     }, options)
   );
 };
+
+generalModal = function(template, data, postRender) {
+  templateAttach(
+    Template.generalModalWrapper, 
+    function(instance) {
+      var modal = $.UIkit.modal(".uk-modal");
+      modal.on({
+        'uk.modal.hide': function() {
+          $('.uk-modal').remove();
+        }
+      });
+      modal.show();
+      postRender && postRender.call(instance, options);
+    },
+    {
+      template: template,
+      data: data
+    }
+  );
+};
