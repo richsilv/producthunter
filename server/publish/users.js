@@ -20,7 +20,7 @@ Meteor.publish('users/top_medals', function() {
 Meteor.publish('users/top_current', function() {
     return Meteor.users.find({}, {
         sort: {
-            points: -1
+            'profile.points': -1
         },
         limit: 20
     });
@@ -29,7 +29,7 @@ Meteor.publish('users/top_current', function() {
 Meteor.publish('users/top_total', function() {
     return Meteor.users.find({}, {
         sort: {
-            total_points: -1
+            'profile.total_points': -1
         },
         limit: 20
     });
@@ -38,7 +38,7 @@ Meteor.publish('users/top_total', function() {
 Meteor.publish('users/top_ave', function() {
     return Meteor.users.find({}, {
         sort: {
-            ave_points: -1
+            'profile.ave_points': -1
         },
         limit: 20
     });

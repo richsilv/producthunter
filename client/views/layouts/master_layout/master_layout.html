@@ -4,7 +4,7 @@
 </template>
 
 <template name="Topbar">
-	<div class="uk-flex uk-width-large-1-2 uk-width-medium-2-3 uk-width-small-1-1 uk-container-center uk-list-icons uk-margin-small-top">
+	<div class="uk-flex uk-width-large-1-2 uk-width-medium-2-3 uk-width-small-1-1 uk-container-center uk-list-icons uk-margin-small-top" id="topbar">
 		{{#each mainMenu}}
 	    	{{#if status}}<span><i class="uk-icon-{{icon}} {{#if active}}uk-active{{/if}}" data-link="{{route}}"></i></span>{{/if}}
 		{{/each}}

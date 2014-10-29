@@ -26,7 +26,11 @@ Meteor.methods({
         var correctPasswordObject = SecureData.findOne({
             key: "password"
         });
-        if (!userId) userId = Meteor.users.findOne({})._id;
+        if (!userId) {
+            var user = Meteor.users.findOne({});
+            if (user) userId = user._id;
+            else throw new Meteor.Error('no_users', 'No users in database');
+        }
         if (correctPasswordObject && correctPasswordObject.value === password) {
             check(userId, String);
 
