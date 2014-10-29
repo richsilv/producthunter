@@ -16,24 +16,24 @@ _.extend(App, {
 
     maxUsers: 1000,
 
-    distribute: function(user, data) {
-        if (typeof user === 'string') user = Meteor.users.findOne(user);
-        if (!user || !user.regid) return false;
+    distribute: function(userCursor, data) {
+        var userCount = 0;
+        if (typeof userCursor === 'string') userCursor = Meteor.users.find(userCursor);
+        if (!userCursor) return null;
         var headers = {
             	'Content-Type': 'application/json',
             	'Authorization': 'key=AIzaSyBcytT1f2LWB-ENpd-gJxlrzmx2vAhchl0'
         	},
-        	url = "https://android.googleapis.com/gcm/send",
-        	payload = {
-        		registration_ids: [user.regid],
-        		data: data
-        	},
-        	fut = new Future();
-        HTTP.post(url, {headers: headers, data: payload}, function(err, res) {
-        	if (err) fut.throw(err);
-        	else fut.return(res);
+        	url = "https://android.googleapis.com/gcm/send";
+        userCursor.forEach(function(user) {
+            var payload = {
+            		registration_ids: [user.regid],
+            		data: data
+            	};
+            HTTP.post(url, {headers: headers, data: payload});
+            userCount ++;
         });
-        return fut.wait();
+        return userCount;
     }
 
 });

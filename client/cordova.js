@@ -30,6 +30,7 @@ if (Meteor.isCordova) {
                         regid: res.regid
                     }
                 });
+                console.log("Registering for GCM");
             } else if (res.event === 'message') {
             	if (res.foreground) {
 					$.UIkit.notify({
@@ -39,6 +40,13 @@ if (Meteor.isCordova) {
 					    pos     : 'top-center'
 					});
             	}
+                else {
+                    window.plugin.notification.local.add({
+                        message:    res.payload.message,
+                        title:      "Notification from Product Hunter",
+                        autoCancel: true
+                    });
+                }
             }
         }
     }

@@ -2,7 +2,8 @@ var phRoot = 'https://api.producthunt.com/v1/',
 	phToken = '5def860d4b60e2db4868b82c2f7369802d755ab6480e19477a05182bb9616109',
 	googleAppsProjectNumber = 626012802452,
 	gcmKey = 'AIzaSyBcytT1f2LWB-ENpd-gJxlrzmx2vAhchl0',
-	Future = Meteor.npmRequire('fibers/future');
+	Future = Meteor.npmRequire('fibers/future'),
+	HUNT_THRESHOLD = 100;
 
 SyncedCron.add({
 	name: 'Daily process',
@@ -46,7 +47,8 @@ function getPosts() {
 			'days_ago': 0
 		}
 	}, function(err, res) {
-		var changedHunts = [];
+		var changedHunts = [],
+			thresholdHunts = [];
 		if (err) {
 			fut.throw(new Meteor.Error(500, 'ProductHunt API Error', err));
 		} else {
@@ -68,6 +70,13 @@ function getPosts() {
 						console.log(Error, e, "at hunt", hunt, 'old hunt is', oldHunt);
 					}
 					changedHunts.push(oldHunt._id);
+					if (Math.floor(hunt.votes_count / HUNT_THRESHOLD) > Math.floor(oldHunt.votes_count / HUNT_THRESHOLD)) {
+						thresholdHunts.push({
+							_id: oldHunt._id,
+							name: oldHunt.name,
+							theshold: Math.floor(hunt.votes_count / HUNT_THRESHOLD) * HUNT_THRESHOLD
+						});
+					}
 				} else {
 					hunt.created_at = new Date(hunt.created_at);
 					hunt.added_at = new Date();
@@ -83,6 +92,11 @@ function getPosts() {
 				}
 			});
 			console.log("Updated points for " + updatedUsers.length + " users");
+			_.each(thresholdHunts, function(huntObject) {
+				App.distribute(Meteor.users.find({'profile.live_hunts._id': huntObject._id}), {
+					message: "Your hunt " + huntObject.name + " has reached " + huntObject.threshold + " votes"
+				});
+			});
 			fut.return(res.data.posts.length);
 		}
 	});
@@ -111,7 +125,7 @@ dailyCron = function(date) {
 		var update = {},
 			hunt_history = [],
 			live_hunts = user.profile.live_hunts,
-			medal = App.getMedal(user.points);
+			medal = App.getMedal(user.points - App.defaultPoints);
 		live_hunts.forEach(function(hunt) {
 			var thisHunt = Hunts.findOne(hunt._id);
 			_.extend(hunt, {
@@ -143,6 +157,9 @@ dailyCron = function(date) {
 		});
 
 		usersCount += Meteor.users.update(user._id, update);
+
+		if (medal) App.distribute(user, "Congratulations, you've won a " + medal + " medal this week with " + (user.profile.points - App.defaultPoints) + " points!");
+		else App.distribute(user, "Your week has ended with a total score of " + (user.profile.points - App.defaultPoints) + "points.");
 	});
 
 	hunts.forEach(function(hunt) {
