@@ -3,7 +3,7 @@ var phRoot = 'https://api.producthunt.com/v1/',
 	googleAppsProjectNumber = 626012802452,
 	gcmKey = 'AIzaSyBcytT1f2LWB-ENpd-gJxlrzmx2vAhchl0',
 	Future = Meteor.npmRequire('fibers/future'),
-	HUNT_THRESHOLD = 100;
+	HUNT_THRESHOLD = 1;
 
 SyncedCron.add({
 	name: 'Daily process',
@@ -92,8 +92,9 @@ function getPosts() {
 				}
 			});
 			console.log("Updated points for " + updatedUsers.length + " users");
+			console.log(thresholdHunts.length.toString() + " hunts have reached a new threshold");
 			_.each(thresholdHunts, function(huntObject) {
-				App.distribute(Meteor.users.find({'profile.live_hunts._id': huntObject._id}), {
+				App.distribute(Meteor.users.find({'profile.live_hunts._id': huntObject._id, 'regid': {$exists: true}}), {
 					message: "Your hunt " + huntObject.name + " has reached " + huntObject.threshold + " votes"
 				});
 			});

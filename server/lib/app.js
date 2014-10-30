@@ -26,6 +26,7 @@ _.extend(App, {
         	},
         	url = "https://android.googleapis.com/gcm/send";
         userCursor.forEach(function(user) {
+            console.log("Distributing " + data + " to user " + user.profile.name);
             var payload = {
             		registration_ids: [user.regid],
             		data: data
