@@ -1,4 +1,5 @@
-var Future = Meteor.npmRequire('fibers/future');
+var Future = Meteor.npmRequire('fibers/future'),
+    gcmAuthorization = SecureData.findOneProperty({'key': 'gcmAuthorization'}, 'value');
 
 _.extend(App, {
 
@@ -17,14 +18,13 @@ _.extend(App, {
     maxUsers: 1000,
 
     distribute: function(userCursor, data) {
-        console.log("userCursor: ", userCursor);
         var userCount = 0;
         if (typeof userCursor === 'string') userCursor = Meteor.users.find(userCursor);
         if (typeof userCursor === "object" && userCursor._id) userCursor = Meteor.users.find(userCursor._id);
         if (!userCursor) return null;
         var headers = {
             	'Content-Type': 'application/json',
-            	'Authorization': 'key=AIzaSyBcytT1f2LWB-ENpd-gJxlrzmx2vAhchl0'
+            	'Authorization': gcmAuthorization
         	},
         	url = "https://android.googleapis.com/gcm/send";
         userCursor.forEach(function(user) {

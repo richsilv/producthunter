@@ -56,7 +56,8 @@ Schema.UserProfile = new SimpleSchema({
 	},
 	ave_points: {
 		type: Number,
-		defaultValue: 0
+		defaultValue: 0,
+		decimal: true
 	},
 	total_weeks: {
 		type: Number,

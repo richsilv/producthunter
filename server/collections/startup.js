@@ -1,9 +1,9 @@
 var phRoot = 'https://api.producthunt.com/v1/',
-	phToken = '5def860d4b60e2db4868b82c2f7369802d755ab6480e19477a05182bb9616109',
-	googleAppsProjectNumber = 626012802452,
-	gcmKey = 'AIzaSyBcytT1f2LWB-ENpd-gJxlrzmx2vAhchl0',
+	phToken = SecureData.findOneProperty({'key': 'phToken'}, 'value'),
+	googleAppsProjectNumber = SecureData.findOneProperty({'key': 'googleAppsProjectNumber'}, 'value'),
+	gcmKey = SecureData.findOneProperty({'key': 'gcmKey'}, 'value'),
 	Future = Meteor.npmRequire('fibers/future'),
-	HUNT_THRESHOLD = 1;
+	HUNT_THRESHOLD = SecureData.findOneProperty({'key': 'huntThreshold'}, 'value') || 100;
 
 SyncedCron.add({
 	name: 'Daily process',
@@ -21,7 +21,9 @@ SyncedCron.add({
 		return parser.text('every 1 mins');
 	},
 	job: function() {
-		var posts = getPosts();
+		posts = [];
+		for (var i = 0; i < 7; i++)
+			posts.push(getPosts(i));
 		return posts;
 	}
 });
@@ -33,7 +35,7 @@ Meteor.startup(function() {
 
 });
 
-function getPosts() {
+function getPosts(daysAgo) {
 
 	var fut = new Future();
 
@@ -44,7 +46,7 @@ function getPosts() {
 			'Authorization': 'Bearer ' + phToken
 		},
 		params: {
-			'days_ago': 0
+			'days_ago': daysAgo || 0
 		}
 	}, function(err, res) {
 		var changedHunts = [],
@@ -74,7 +76,7 @@ function getPosts() {
 						thresholdHunts.push({
 							_id: oldHunt._id,
 							name: oldHunt.name,
-							theshold: Math.floor(hunt.votes_count / HUNT_THRESHOLD) * HUNT_THRESHOLD
+							threshold: Math.floor(hunt.votes_count / HUNT_THRESHOLD) * HUNT_THRESHOLD
 						});
 					}
 				} else {
@@ -165,8 +167,12 @@ dailyCron = function(date) {
 
 		usersCount += Meteor.users.update(user._id, update);
 
-		if (medal) App.distribute(user, "Congratulations, you've won a " + medal + " medal this week with " + (user.profile.points - App.defaultPoints) + " points!");
-		else App.distribute(user, "Your week has ended with a total score of " + (user.profile.points - App.defaultPoints) + "points.");
+		if (medal) App.distribute(user, {
+			message: "Congratulations, you've won a " + medal + " medal this week with " + (user.profile.points - App.defaultPoints) + " points!"
+		});
+		else App.distribute(user, {
+			message: "Your week has ended with a total score of " + (user.profile.points - App.defaultPoints) + "points."
+		});
 	});
 
 	hunts.forEach(function(hunt) {
