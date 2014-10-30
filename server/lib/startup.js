@@ -94,7 +94,13 @@ function getPosts() {
 			console.log("Updated points for " + updatedUsers.length + " users");
 			console.log(thresholdHunts.length.toString() + " hunts have reached a new threshold");
 			_.each(thresholdHunts, function(huntObject) {
-				App.distribute(Meteor.users.find({'profile.live_hunts._id': huntObject._id, 'regid': {$exists: true}}), {
+				App.distribute(Meteor.users.find({
+					'profile.live_hunts._id': huntObject._id,
+					'regid': {
+						$exists: true
+					}
+				}), {
+					title: "Notification from Product Hunter",
 					message: "Your hunt " + huntObject.name + " has reached " + huntObject.threshold + " votes"
 				});
 			});
