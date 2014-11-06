@@ -29,5 +29,3 @@ iron:middleware-stack@1.0.0-pre4
 iron:router@1.0.0-pre4
 iron:url@1.0.0-pre4
 maazalik:highcharts
-gandev:server-eval
-
