@@ -46,7 +46,8 @@ Meteor.methods({
 
     'utility/sendNotification': function(data) {
         var user = Meteor.user(this.userId);
+        console.log(user)
         if (!user || !user.admin) throw new Meteor.Error('not_admin', 'User does not have admin privileges');
-		else return App.distribute(this.userId, data);
+		else return App.notificationClient.sendNotification(this.userId, data);
     }
 });

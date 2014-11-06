@@ -97,7 +97,7 @@ function getPosts(daysAgo) {
 			console.log("Updated points for " + updatedUsers.length + " users");
 			console.log(thresholdHunts.length.toString() + " hunts have reached a new threshold");
 			_.each(thresholdHunts, function(huntObject) {
-				App.distribute(Meteor.users.find({
+				App.notificationClient.sendNotification(Meteor.users.find({
 					'profile.live_hunts._id': huntObject._id,
 					'regid': {
 						$exists: true
@@ -168,10 +168,10 @@ dailyCron = function(date) {
 
 		usersCount += Meteor.users.update(user._id, update);
 
-		if (medal) App.distribute(user, {
+		if (medal) App.notificationClient.sendNotification(user, {
 			message: "Congratulations, you've won a " + medal + " medal this week with " + (user.profile.points - App.defaultPoints) + " points!"
 		});
-		else App.distribute(user, {
+		else App.notificationClient.sendNotification(user, {
 			message: "Your week has ended with a total score of " + (user.profile.points - App.defaultPoints) + "points."
 		});
 	});
