@@ -4,6 +4,7 @@
 Template.Login.events({
   'click button': function(event, template) {
     var vendor = $(event.currentTarget).data('vendor');
+    console.log(vendor);
     Meteor['loginWith' + vendor] && Meteor['loginWith' + vendor]();
   }
 });
