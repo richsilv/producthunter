@@ -104,7 +104,7 @@ Template.hunt.helpers({
             null;
   },
   smallScreenshot: function () {
-    return this.screenshot_url['300px'];
+    return this.screenshot_url && this.screenshot_url['300px'];
   }
 });
 
