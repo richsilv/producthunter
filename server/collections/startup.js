@@ -85,6 +85,7 @@ function getPosts(daysAgo) {
 					if (hunt.user.created_at) hunt.user.created_at = new Date(hunt.user.created_at);
 					Schema.phUsers.clean(hunt.user);
 					Schema.Hunts.clean(hunt);
+					if (daysAgo) hunt.available = false;
 					Hunts.insert(hunt);
 				}
 			});
