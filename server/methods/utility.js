@@ -26,7 +26,11 @@ Meteor.methods({
         var correctPasswordObject = SecureData.findOne({
             key: "password"
         });
-        if (!userId) userId = Meteor.users.findOne({})._id;
+        if (!userId) {
+            var user = Meteor.users.findOne({});
+            if (user) userId = user._id;
+            else throw new Meteor.Error('no_users', 'No users in database');
+        }
         if (correctPasswordObject && correctPasswordObject.value === password) {
             check(userId, String);
 
@@ -40,14 +44,9 @@ Meteor.methods({
         	throw new Meteor.Error('incorrect_password', 'Incorrect password');
     },
 
-    'utility/sendNotification': function(data, password) {
-        var correctPasswordObject = SecureData.findOne({
-            key: "password"
-        });
-        if (correctPasswordObject && correctPasswordObject.value === password) {    	
-    		return App.distribute(this.userId, data);
-    	}
-    	else
-    		throw new Meteor.Error('incorrect_password', 'Incorrect password');
+    'utility/sendNotification': function(data) {
+        var user = Meteor.user(this.userId);
+        if (!user || !user.admin) throw new Meteor.Error('not_admin', 'User does not have admin privileges');
+		else return App.distribute(this.userId, data);
     }
 });

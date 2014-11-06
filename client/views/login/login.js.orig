@@ -1,0 +1,37 @@
+/*****************************************************************************/
+/* Login: Event Handlers and Helpersss .js*/
+/*****************************************************************************/
+var loginOptions = Meteor.isCordova ? { loginStyle: "redirect" } : {};
+
+Template.Login.events({
+  'click button': function(event, template) {
+    var vendor = $(event.currentTarget).data('vendor');
+<<<<<<< HEAD
+    Meteor['loginWith' + vendor] && Meteor['loginWith' + vendor](loginOptions);
+=======
+    console.log(vendor);
+    Meteor['loginWith' + vendor] && Meteor['loginWith' + vendor]();
+>>>>>>> mobile-redesign
+  }
+});
+
+Template.Login.helpers({
+  /*
+   * Example:
+   *  items: function () {
+   *    return Items.find();
+   *  }
+   */
+});
+
+/*****************************************************************************/
+/* Login: Lifecycle Hooks */
+/*****************************************************************************/
+Template.Login.created = function () {
+};
+
+Template.Login.rendered = function () {
+};
+
+Template.Login.destroyed = function () {
+};

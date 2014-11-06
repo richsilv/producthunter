@@ -1,13 +1,14 @@
 <template name="Home">
+	<div id="topbar-spacer"></div>
   	<div class="uk-margin-top uk-width-large-4-5 uk-width-medium-2-3 uk-width-small-1-1 uk-container-center">
   		<div class="uk-width-large-1-2 uk-width-medium-2-3 uk-width-small-1-1 uk-container-center">
   			{{> userSummary}}
   		</div>
   		<div class="uk-grid uk-tight-panels">
-			<div class="uk-width-large-1-2 uk-width-small-1-1 uk-overflow-vertical">
+			<div class="uk-width-large-1-2 uk-width-small-1-1 uk-overflow-vertical uk-margin-top">
 				{{> liveHunts}}
 			</div>
-			<div class="uk-width-large-1-2 uk-width-small-1-1 uk-overflow-vertical">
+			<div class="uk-width-large-1-2 uk-width-small-1-1 uk-overflow-vertical uk-margin-top">
 				{{> myHunts}}
 			</div>
 		</div>
@@ -29,8 +30,8 @@
 </template>
 
 <template name="liveHunts">
-	<h2 class="uk-heading-large uk-text-center">Available Hunts</h2>
-	<div class="scroll-container uk-tight-panels">
+	<h2 class="uk-heading-large uk-text-center" data-action="toggle-mini">Available Hunts</h2>
+	<div class="scroll-container {{#if mini}}uk-hunt-grid{{else}}uk-tight-panels{{/if}}">
 		{{#each liveHunts}}
 			{{> hunt}}
 		{{/each}}
@@ -38,7 +39,7 @@
 </template>
 
 <template name="myHunts">
-	<h2 class="uk-heading-large uk-text-center">My Live Hunts</h2>
+	<h2 class="uk-heading-large uk-text-center" data-action="toggle-mini">My Live Hunts</h2>
 	<div class="scroll-container uk-tight-panels">
 		{{#each myHunts}}
 			{{> hunt}}
@@ -50,7 +51,7 @@
 </template>
 
 <template name="hunt">
-	<div class="uk-panel uk-panel-box {{#if affordable}}uk-panel-box-primary{{/if}} {{#if bought_at}}uk-panel-box-secondary{{/if}} uk-width-1-1" data-uk-tooltip={{affordable}} title="{{#if affordable}}Click on my price to buy me!{{/if}}">
+	<div class="uk-panel uk-panel-box hunt-box {{#if affordable}}uk-panel-box-primary{{/if}} {{#if bought_at}}uk-panel-box-secondary{{/if}} {{#unless ../mini}}uk-width-1-1{{/unless}}" data-uk-tooltip={{affordable}} title="{{#if affordable}}Click on my price to buy me!{{/if}}" style="background: linear-gradient(rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.2)), url('{{smallScreenshot}}') no-repeat center center; background-size: cover;">
 		<div class="uk-panel-title uk-cursor-pointer" data-action="hunt-modal">{{name}}</div>
 		{{#if exists 'profit'}}
 			<div class="uk-panel-badge panel-button {{#if positive profit}}uk-profit{{else}}uk-loss{{/if}}">Profit: {{profit}} Points</div>
@@ -59,12 +60,15 @@
 				<span class="{{#if affordable}}uk-text-warning{{/if}}">{{points}}</span> Points
 			</div>
 		{{/if}}
-		<a href="{{redirect_url}}" target="_blank" class="basic-link uk-display-inline uk-float-left uk-margin-small-top">{{tagline}}</a>
-		{{#if bought_at}}
-		<p class="uk-display-inline uk-float-right uk-margin-small-top">Bought on <span class="uk-text-warning">{{formatDate bought_at}}</span></p>
-		{{else}}
-		<p class="uk-display-inline uk-float-right uk-margin-small-top">Owned by <span class="uk-text-warning">{{buyers}}</span> hunters</p>
-		{{/if}}
+		{{#unless ../mini}}
+			<div class="uk-1em-gap"></div>
+			<a href="{{redirect_url}}" target="_blank" class="basic-link uk-display-inline uk-float-left uk-margin-small-top">{{tagline}}</a>
+			{{#if bought_at}}
+			<p class="uk-display-inline uk-float-right uk-margin-small-top">Bought on <span class="uk-text-warning">{{formatDate bought_at}}</span></p>
+			{{else}}
+			<p class="uk-display-inline uk-float-right uk-margin-small-top">Owned by <span class="uk-text-warning">{{buyers}}</span> hunters</p>
+			{{/if}}
+		{{/unless}}
 	</div>
 </template>
 

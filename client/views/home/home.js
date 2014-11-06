@@ -35,6 +35,13 @@ Template.liveHunts.helpers({
 
 });
 
+Template.liveHunts.events({
+  'click [data-action="toggle-mini"]': function () {
+    if (App.mini) 
+      Router.current().state.set('mini', !Router.current().state.get('mini'));
+  }
+});
+
 Template.myHunts.helpers({
 
   myHunts: function() {
@@ -95,6 +102,9 @@ Template.hunt.helpers({
     return (user && this.points <= user.profile.points && _.pluck(user.profile.live_hunts, '_id').indexOf(this._id) === -1) ?
             "{delay:1000}" :
             null;
+  },
+  smallScreenshot: function () {
+    return this.screenshot_url['300px'];
   }
 });
 
@@ -143,6 +153,12 @@ Template.huntModal.helpers({
     return this.screenshot_url['300px'];
   }
 });
+/*
+Template.liveHunts.helpers({
+  mini: function() {
+    return true;
+  }
+});*/
 
 /*****************************************************************************/
 /* Home: Lifecycle Hooks */

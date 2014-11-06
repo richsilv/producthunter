@@ -144,6 +144,8 @@ em {
 	border-radius: 0.25em;
 	font-size: 1.5rem;
 	cursor: pointer;
+	color: $color-1;
+	background-color: $color-2;
 
 	&.disabled, &.disabled:hover {
 		color: $primary-disabled-color;
@@ -154,12 +156,21 @@ em {
 	&:hover {
 		color: $primary-hover-color;
 		background-color: $primary-hover-background;
+
+		.uk-text-warning {
+			color: $color-2 !important;
+		}
 	};
+
 }
 
 .scroll-container {
 	overflow-y: auto;
 	max-height: 60vh;
+
+    @media screen and (max-width: $breakpoint-small) {
+    	border: 1px solid transparentize($color-3, 0.9);
+    }
 }
 
 @mixin vendor($background, $text) {
@@ -214,6 +225,10 @@ body .uk-placeholder {
 	justify-content: space-around;
 }
 
+.uk-display-table {
+	display: inline-table;
+}
+
 .uk-overflow-vertical {
 	overflow-y: auto;
 }
@@ -232,6 +247,80 @@ body .uk-placeholder {
 
 .uk-cursor-pointer {
 	cursor: pointer;
+}
+
+body .uk-hunt-grid {
+
+	transition: all 1s;
+	height: 125px;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+
+	&>.uk-panel {
+		margin: 5px !important;
+		padding-right: 15px !important;
+		padding-left: 15px !important;
+		min-height: 85px;
+		transition: all 1s !important;
+		display: inline-block;
+		background-size: cover;
+		background-position: center center;
+		background-repeat: no-repeat;
+
+		.uk-panel-title {
+			background-color: rgba(255, 255, 255, 0.5);
+			border-radius: 0.2em;
+			text-align: center
+		}
+
+		.uk-panel-badge.panel-button:not(.disabled) {
+			color: $primary-hover-color;
+			background-color: $primary-hover-background;
+
+			.uk-text-warning {
+				color: $color-2 !important;
+			}
+
+			&:active {
+				color: darken($primary-hover-color, $hover-amount);
+				background-color: darken($primary-hover-background, $hover-amount);
+			}
+		}
+	}
+
+	.uk-panel-badge.panel-button {
+		position: static;
+	}
+}
+
+body .hunt-box {
+
+	.uk-panel-title {
+		display: inline;
+		padding: 0.3em;
+		margin-bottom: 0.3em;
+		border-radius: 0.2em;
+		background-color: transparentize($color-2, 0.5);
+		color: $color-3;
+	}
+
+	a, p {
+		display: inline;
+		padding: 0.3em;
+		margin-bottom: 0.3em;
+		border-radius: 0.2em;
+		margin-top: 0.5em;
+		background-color: transparentize($color-2, 0.5);
+		color: $color-3;		
+	}
+
+}
+
+.uk-1em-gap {
+	height: 1em;
+	display: block;
+	clear: both;
 }
 
 // MODAL STYLING
@@ -264,6 +353,18 @@ body .uk-modal-dialog {
 
 	img {
 		border: 1px solid transparentize($color-2, 0.8);
+	}
+
+	.panel-button {
+
+		&:hover strong {
+			color: $color-2;
+		}
+
+		strong {
+			color: $color-3;
+		}
+
 	}
 
 }
@@ -381,6 +482,10 @@ $icon-button-disabled-color: $button-disabled-color;
 .uk-big-button {
 	padding: $button-padding-horizontal;
 	border-radius: 2px
+}
+
+.hunt-box {
+	background-size: cover;
 }
 
 $icon-font-path: "/fonts/uikit";

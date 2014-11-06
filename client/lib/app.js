@@ -42,6 +42,7 @@ _.extend(App, {
 				console.log(res);
 				Meteor.connection.setUserId(res);
 			}
+			else console.log(err);
 		});
 	}
 });
@@ -60,4 +61,8 @@ App.helpers = {
 
 _.each(App.helpers, function (helper, key) {
   Handlebars.registerHelper(key, helper);
+});
+
+Meteor.startup(function() {
+	App.mini = window.innerWidth < 768;
 });
